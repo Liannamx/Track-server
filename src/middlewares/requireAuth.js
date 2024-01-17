@@ -8,7 +8,7 @@ module.exports = (request, response, next) => {
   const errorStatus = 401;
 
   if (!authorization) {
-    return request.status(errorStatus).send({ error: errorMessage });
+    return response.status(errorStatus).send({ error: errorMessage });
   }
 
   const token = authorization.replace("Bearer ", "");
