@@ -19,7 +19,7 @@ userSchema.pre("save", function (next) {
     return next();
   }
 
-  bcrypt.getSalt(10, (error, salt) => {
+  bcrypt.genSalt(10, (error, salt) => {
     if (error) {
       return next(error);
     }
@@ -34,22 +34,22 @@ userSchema.pre("save", function (next) {
   });
 });
 
-userSchema.methods.comparePassword = function(candidatePassword) { 
-  const user = this; 
+userSchema.methods.comparePassword = function (candidatePassword) {
+  const user = this;
 
-  return new Promise((resolve, reject) => { 
+  return new Promise((resolve, reject) => {
     bcrypt.compare(candidatePassword, user.password, (error, isMatch) => {
-      if (error) { 
+      if (error) {
         return reject(error);
       }
 
-      if (!isMatch) { 
+      if (!isMatch) {
         return reject(false);
       }
 
       resolve(true);
     });
   });
-}
+};
 
 mongoose.model("User", userSchema);
